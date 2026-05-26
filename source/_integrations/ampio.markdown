@@ -41,11 +41,19 @@ Before adding the integration:
 - Your Ampio M-SERV must be reachable from the Home Assistant host on its MQTT port (`1883` by default).
 - You need an Ampio account on the M-SERV with permission to read the configuration. Restricted accounts that cannot read the device list are refused at setup, because the integration cannot derive a stable identity for the M-SERV without it.
 
+## Discovery
+
+Home Assistant discovers the M-SERV automatically through DHCP when it joins the LAN or renews its lease. When that happens, a card appears on the {% my integrations title="**Settings** > **Devices & services**" %} page inviting you to set it up; selecting it opens the configuration flow with the host already filled in. You only have to enter the credentials.
+
+You can also add the integration manually from the same page. In that case, the host field is pre-filled with the first reachable M-SERV that responds to a quick LAN probe (the well-known `ampio.local` hostname, and, if the optional zeroconf path is available, any MQTT broker advertised on the LAN). If nothing responds, the field defaults to `ampio.local`.
+
+When the M-SERV's IP address changes (for example after a DHCP renewal), Home Assistant offers another discovery card; confirming it updates the stored host on the existing entry without creating a duplicate.
+
 {% include integrations/config_flow.md %}
 
 {% configuration_basic %}
 Host:
-  description: "Hostname or IP address of your Ampio M-SERV controller."
+  description: "Hostname or IP address of your Ampio M-SERV controller. Pre-filled when the M-SERV is discovered on the LAN."
 Port:
   description: "MQTT port of the M-SERV. The default is `1883`."
 Username:
