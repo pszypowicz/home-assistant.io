@@ -71,6 +71,11 @@ time_format:
   description: >
     Controls how timestamps in `state_content` are formatted. Valid values are `relative`, `total`, `date`, `time`, and `datetime`. Can also be defined as a map with a `type` key and an optional `style` key (`long` or `short`).
   type: [string, map]
+state_position:
+  required: false
+  description: Position of the state on the tile card. Can be `secondary` or `inline`. With `secondary`, the state is displayed below the name. With `inline`, the state is displayed next to the name, at the end of the same row. `inline` is not compatible with the `vertical` option, and it forces `features_position` to `bottom`.
+  type: string
+  default: secondary
 tap_action:
   required: false
   description: Action taken on card tap. See [action documentation](/dashboards/actions/#tap-action). By default, it will show the "more-info" dialog.
@@ -101,7 +106,7 @@ features:
   type: list
 features_position:
   required: false
-  description: Position of the features on the tile card. Can be `bottom` or `inline`. When set to `inline`, the first feature is displayed next to the name and any remaining features are displayed below it, two per row. A feature that is alone on a row takes the full width. `inline` is not compatible with the `vertical` option.
+  description: Position of the features on the tile card. Can be `bottom` or `inline`. When set to `inline`, the first feature is displayed next to the name and any remaining features are displayed below it, two per row. A feature that is alone on a row takes the full width. `inline` is not compatible with the `vertical` option or with `state_position: inline`.
   type: string
   default: bottom
 
@@ -143,6 +148,12 @@ state_content:
   - state
   - brightness
   - last-changed
+```
+
+```yaml
+type: tile
+entity: select.home_mode
+state_position: inline
 ```
 
 ```yaml
